@@ -22,8 +22,8 @@ describe('The Question Detail Component',()=>{
         it('Should not regress', ()=>{
             const tree = renderer.create(
                 <QuestionDetailDisplay
-                    titile="The meaning of life"
-                    body="42"
+                    titile="THANKS!"
+                    body="43"
                     answer_count={0}
                     tags={['hitchhiking']}
                 />
