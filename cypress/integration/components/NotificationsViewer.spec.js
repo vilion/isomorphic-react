@@ -1,27 +1,14 @@
-import NotificationsViewer from '../NotificationsViewer';
-import React from 'react';
-import renderer from 'react-test-renderer';
-import delay from 'redux-saga';
-
-
-jest.mock('../../services/NotificationsService');
-
-
-const notificationsService = require('../../services/NotificationsService').default;
+import NotificationsViewer from '../../../src/components/NotificationsViewer';
+import NotificationsService from '../../../src/services/NotificationsService';
+import React from 'react'
+import { mount } from 'cypress-react-unit-test'
 
 describe('The notification viewer', ()=>{
-    beforeAll(async()=>{
-         notificationsService.__setCount(5);
+    before(async()=>{
+         cy.stub(NotificationsService, 'GetNotifications', ()=>{}).returns({count:5})
     });
     it('should displays correct number of notifications', async ()=>{
-       const tree = renderer.create(
-           <NotificationsViewer/>
-           )
-
-       await delay();
-       const instance = tree.root;
-       const component = instance.findByProps({className:'notifications'});
-       const actualText = component.children[0];
-       expect(actualText).toEqual('5 Notifications Awaiting!');
+       mount(<NotificationsViewer/>)
+       cy.get('.notifications').should('have.text', '5 Notifications Awaiting!')
     });
 });
