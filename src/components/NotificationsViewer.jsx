@@ -1,5 +1,5 @@
 import React from 'react';
-import NotificationsService from './services/NotificationsService';
+import NotificationsService from '../services/NotificationsService';
 
 export default class extends React.Component {
     constructor(...args) {
@@ -11,14 +11,14 @@ export default class extends React.Component {
 
     async componentDidMount () {
         let { count } = await NotificationsService.GetNotifications();
-        this.setState({count});
+        this.setState({count:count});
     }
 
     render() {
         return (
             <section className="mt-3 mb-2">
                 <div className="notifications">
-                    {this.state.count != -1 ? this.state.count: `Loading...`}
+                    {this.state.count != -1 ? `${this.state.count} Notifications Awaiting!` : `Loading...`}
                 </div>
             </section>
         )
